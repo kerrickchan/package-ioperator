@@ -1,4 +1,4 @@
-import { Operator } from './types';
+import { Operator, OperatorValue } from './types';
 import { operators } from './operators';
 
 /**
@@ -17,4 +17,39 @@ import { operators } from './operators';
  */
 export function isValidOperator(operator: string): operator is Operator {
   return operator in operators;
+}
+
+/**
+ * A function that compares two OperatorValues and returns a boolean result.
+ * 
+ * @typedef {(a: OperatorValue, b: OperatorValue) => boolean} Comparator
+ */
+export type Comparator = (a: OperatorValue, b: OperatorValue) => boolean;
+
+/**
+ * Checks if a value is comparable (string or number).
+ * 
+ * @param {OperatorValue} value - The value to check
+ * @returns {boolean} True if the value is a string or number, false otherwise
+ */
+export function isComparable(value: OperatorValue): value is string | number {
+  return typeof value === 'string' || typeof value === 'number';
+}
+
+/**
+ * Compares two OperatorValues and returns a number indicating their relative order.
+ * 
+ * @param {OperatorValue} a - The first value to compare
+ * @param {OperatorValue} b - The second value to compare
+ * @returns {number} A negative number if a < b, positive if a > b, and 0 if a === b
+ * @throws {Error} If either value is not comparable (not a string or number)
+ */
+export function compareValues(a: OperatorValue, b: OperatorValue): number {
+  if (!isComparable(a) || !isComparable(b)) {
+    throw new Error('Cannot compare non-primitive values');
+  }
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a - b;
+  }
+  return String(a).localeCompare(String(b), undefined, { numeric: true });
 }
