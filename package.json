@@ -1,6 +1,6 @@
 {
   "name": "@kerrickchan/ioperator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GitHub NPM Package of Convert String to Math Operator Rules",
   "main": "src/index.ts",
   "repository": "https://github.com/kerrickchan/package-ioperator",
